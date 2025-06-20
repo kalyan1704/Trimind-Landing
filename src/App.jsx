@@ -30,20 +30,7 @@ function App() {
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
 
-  // Simulate real-time data updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTradingData(prev => ({
-        ...prev,
-        price: prev.price + (Math.random() - 0.5) * 10,
-        sentiment: Math.max(0, Math.min(1, prev.sentiment + (Math.random() - 0.5) * 0.1))
-      }))
-    }, 3000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  // Generate price history for charts
+  // Generate initial price history
   useEffect(() => {
     const generatePriceHistory = () => {
       const history = []
@@ -58,6 +45,19 @@ function App() {
       setPriceHistory(history)
     }
     generatePriceHistory()
+  }, [])
+
+  // Simulate real-time data updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTradingData(prev => ({
+        ...prev,
+        price: prev.price + (Math.random() - 0.5) * 10,
+        sentiment: Math.max(0, Math.min(1, prev.sentiment + (Math.random() - 0.5) * 0.1))
+      }))
+    }, 3000)
+
+    return () => clearInterval(interval)
   }, [])
 
   const showNotificationMessage = (message) => {
@@ -158,6 +158,17 @@ function App() {
     } else {
       showNotificationMessage('Insufficient funds for withdrawal')
     }
+  }
+
+  // Safe price chart calculations
+  const getMinPrice = () => {
+    if (priceHistory.length === 0) return 2300
+    return Math.min(...priceHistory.map(p => p.price))
+  }
+
+  const getMaxPrice = () => {
+    if (priceHistory.length === 0) return 2700
+    return Math.max(...priceHistory.map(p => p.price))
   }
 
   const renderHome = () => (
@@ -458,20 +469,20 @@ function App() {
             <h3>Price Chart</h3>
             <div className="price-chart">
               <div className="chart-container">
-                {priceHistory.map((point, index) => (
+                {priceHistory.length > 0 && priceHistory.map((point, index) => (
                   <div
                     key={index}
                     className="chart-point"
                     style={{
                       left: `${(index / (priceHistory.length - 1)) * 100}%`,
-                      bottom: `${((point.price - 2300) / 400) * 100}%`
+                      bottom: `${((point.price - getMinPrice()) / (getMaxPrice() - getMinPrice())) * 100}%`
                     }}
                   />
                 ))}
               </div>
               <div className="chart-labels">
-                <span>${Math.min(...priceHistory.map(p => p.price)).toFixed(0)}</span>
-                <span>${Math.max(...priceHistory.map(p => p.price)).toFixed(0)}</span>
+                <span>${getMinPrice().toFixed(0)}</span>
+                <span>${getMaxPrice().toFixed(0)}</span>
               </div>
             </div>
           </div>
