@@ -68,16 +68,23 @@ function App() {
 
   const handleLogin = (e) => {
     e.preventDefault()
+    console.log('Login form submitted')
     const formData = new FormData(e.target)
     const email = formData.get('email')
     const password = formData.get('password')
     
+    console.log('Email:', email, 'Password:', password)
+    
     // Simulate authentication
     if (email && password) {
+      console.log('Login successful, redirecting to dashboard')
       setIsLoggedIn(true)
       setUser({ email, name: email.split('@')[0] })
       setCurrentView('dashboard')
       showNotificationMessage('Successfully logged in!')
+    } else {
+      console.log('Login failed - missing email or password')
+      showNotificationMessage('Please enter both email and password')
     }
   }
 
@@ -383,6 +390,18 @@ function App() {
         <div className="auth-footer">
           <p>Don't have an account? <button onClick={() => setCurrentView('signup')} className="link-button">Sign up</button></p>
           <button onClick={() => setCurrentView('home')} className="link-button">Back to Home</button>
+          <button 
+            onClick={() => {
+              setIsLoggedIn(true)
+              setUser({ email: 'test@example.com', name: 'Test User' })
+              setCurrentView('dashboard')
+              showNotificationMessage('Test login successful!')
+            }} 
+            className="auth-button"
+            style={{ marginTop: '1rem', background: '#48bb78' }}
+          >
+            Test Login (Skip Form)
+          </button>
         </div>
       </div>
     </div>
