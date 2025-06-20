@@ -1,0 +1,23 @@
+[
+  {
+    "wallet": "0xABC123...",
+    "asset": "ETH",
+    "action": "buy",
+    "amount_usd": 4200000,
+    "timestamp": "2025-06-20T12:00:00Z"
+  },
+  {
+    "wallet": "0xDEF456...",
+    "asset": "ETH",
+    "action": "buy",
+    "amount_usd": 3100000,
+    "timestamp": "2025-06-20T12:05:00Z"
+  },
+  {
+    "wallet": "0xGHI789...",
+    "asset": "HYPE",
+    "action": "sell",
+    "amount_usd": 2000000,
+    "timestamp": "2025-06-20T12:10:00Z"
+  }
+] 

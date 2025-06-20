@@ -1,0 +1,6 @@
+streamlit
+aiohttp
+openai
+yfinance
+requests
+python-dotenv 
