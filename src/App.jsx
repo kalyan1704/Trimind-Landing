@@ -230,34 +230,20 @@ function App() {
     return Math.max(...priceHistory.map(p => p.price))
   }
 
-  // AI Mind Logo Component
-  const AIMindLogo = () => (
-    <div className="ai-mind-logo">
-      <div className="ai-core">
-        <div className="ai-brain">
-          <div className="neural-network">
-            <div className="neuron"></div>
-            <div className="neuron"></div>
-            <div className="neuron"></div>
-            <div className="neuron"></div>
-            <div className="neuron"></div>
-            <div className="neuron"></div>
-          </div>
-        </div>
+  // Static Brain Logo Component
+  const BrainLogo = () => (
+    <div className="brain-logo">
+      <div className="brain-core">
+        <div className="brain-icon">🧠</div>
       </div>
-      <div className="orbiting-elements">
-        <div className="orbit orbit-1">
-          <div className="crypto-symbol">₿</div>
-        </div>
-        <div className="orbit orbit-2">
-          <div className="stock-symbol">📈</div>
-        </div>
-        <div className="orbit orbit-3">
-          <div className="chart-symbol">📊</div>
-        </div>
-        <div className="orbit orbit-4">
-          <div className="trade-symbol">💹</div>
-        </div>
+      <div className="orbit orbit-1">
+        <div className="orbit-symbol tokens">🪙</div>
+      </div>
+      <div className="orbit orbit-2">
+        <div className="orbit-symbol charts">📊</div>
+      </div>
+      <div className="orbit orbit-3">
+        <div className="orbit-symbol dollar">💵</div>
       </div>
     </div>
   )
@@ -268,7 +254,7 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <div className="nav-logo">
-            <AIMindLogo />
+            <BrainLogo />
             <span className="logo-text">TriMind</span>
           </div>
           <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
@@ -420,7 +406,7 @@ function App() {
           <div className="footer-content">
             <div className="footer-section">
               <div className="footer-logo">
-                <AIMindLogo />
+                <BrainLogo />
                 <span className="logo-text">TriMind</span>
               </div>
               <p>AI-powered copycat trading that delivers results.</p>
@@ -456,7 +442,7 @@ function App() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <AIMindLogo />
+          <BrainLogo />
           <h2>Welcome Back to TriMind</h2>
           <p>Sign in to access your trading dashboard</p>
         </div>
@@ -495,7 +481,7 @@ function App() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <AIMindLogo />
+          <BrainLogo />
           <h2>Join TriMind</h2>
           <p>Create your account and start trading with AI</p>
         </div>
@@ -527,7 +513,7 @@ function App() {
       <nav className="dashboard-nav">
         <div className="nav-container">
           <div className="nav-logo">
-            <AIMindLogo />
+            <BrainLogo />
             <span className="logo-text">TriMind</span>
           </div>
           <div className="nav-menu">
