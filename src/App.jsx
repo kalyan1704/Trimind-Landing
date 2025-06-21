@@ -21,9 +21,28 @@ function App() {
     totalValue: 12450.00,
     todayPL: 234.50,
     totalPL: 1234.50,
+    totalDeposits: 10000.00,
+    totalWithdrawals: 500.00,
+    availableBalance: 3450.00,
     positions: [
-      { asset: 'ETH', quantity: 2.5, avgPrice: 2400, currentPrice: 2450.50, pl: 126.25 },
-      { asset: 'BTC', quantity: 0.1, avgPrice: 42000, currentPrice: 43200, pl: 120.00 }
+      { asset: 'ETH', quantity: 2.5, avgPrice: 2400, currentPrice: 2450.50, pl: 126.25, allocation: 50.2 },
+      { asset: 'BTC', quantity: 0.1, avgPrice: 42000, currentPrice: 43200, pl: 120.00, allocation: 34.7 },
+      { asset: 'SOL', quantity: 15.0, avgPrice: 85, currentPrice: 92.50, pl: 112.50, allocation: 11.1 },
+      { asset: 'ADA', quantity: 1000, avgPrice: 0.45, currentPrice: 0.48, pl: 30.00, allocation: 4.0 }
+    ],
+    earnings: {
+      daily: 234.50,
+      weekly: 1250.75,
+      monthly: 3450.25,
+      yearly: 12500.00
+    },
+    transactionHistory: [
+      { type: 'deposit', amount: 5000, date: '2024-06-15', status: 'completed' },
+      { type: 'withdrawal', amount: 500, date: '2024-06-10', status: 'completed' },
+      { type: 'deposit', amount: 3000, date: '2024-06-01', status: 'completed' },
+      { type: 'deposit', amount: 2000, date: '2024-05-20', status: 'completed' },
+      { type: 'trade', amount: 1500, date: '2024-06-18', status: 'completed', asset: 'ETH' },
+      { type: 'trade', amount: 800, date: '2024-06-17', status: 'completed', asset: 'BTC' }
     ]
   })
   const [priceHistory, setPriceHistory] = useState([])
@@ -133,13 +152,24 @@ function App() {
       quantity: (tradeAmount / parseFloat(signal.price)).toFixed(4),
       avgPrice: parseFloat(signal.price),
       currentPrice: parseFloat(signal.price),
-      pl: 0
+      pl: 0,
+      allocation: Math.random() * 20 + 5 // Random allocation between 5-25%
+    }
+    
+    const newTransaction = {
+      type: 'trade',
+      amount: tradeAmount,
+      date: new Date().toISOString().split('T')[0],
+      status: 'completed',
+      asset: signal.asset
     }
     
     setPortfolio(prev => ({
       ...prev,
       positions: [...prev.positions, newPosition],
-      totalValue: prev.totalValue + tradeAmount
+      totalValue: prev.totalValue + tradeAmount,
+      availableBalance: prev.availableBalance - tradeAmount,
+      transactionHistory: [newTransaction, ...prev.transactionHistory]
     }))
     
     showNotificationMessage(`Trade executed: ${signal.action} ${signal.asset} at $${signal.price}`)
@@ -147,20 +177,42 @@ function App() {
 
   const depositFunds = () => {
     const amount = Math.random() * 5000 + 1000
+    const newTransaction = {
+      type: 'deposit',
+      amount: amount,
+      date: new Date().toISOString().split('T')[0],
+      status: 'completed'
+    }
+    
     setPortfolio(prev => ({
       ...prev,
-      totalValue: prev.totalValue + amount
+      totalValue: prev.totalValue + amount,
+      availableBalance: prev.availableBalance + amount,
+      totalDeposits: prev.totalDeposits + amount,
+      transactionHistory: [newTransaction, ...prev.transactionHistory]
     }))
+    
     showNotificationMessage(`Deposited $${amount.toFixed(2)} to your account`)
   }
 
   const withdrawFunds = () => {
     const amount = Math.random() * 1000 + 500
-    if (portfolio.totalValue >= amount) {
+    if (portfolio.availableBalance >= amount) {
+      const newTransaction = {
+        type: 'withdrawal',
+        amount: amount,
+        date: new Date().toISOString().split('T')[0],
+        status: 'completed'
+      }
+      
       setPortfolio(prev => ({
         ...prev,
-        totalValue: prev.totalValue - amount
+        totalValue: prev.totalValue - amount,
+        availableBalance: prev.availableBalance - amount,
+        totalWithdrawals: prev.totalWithdrawals + amount,
+        transactionHistory: [newTransaction, ...prev.transactionHistory]
       }))
+      
       showNotificationMessage(`Withdrawn $${amount.toFixed(2)} from your account`)
     } else {
       showNotificationMessage('Insufficient funds for withdrawal')
@@ -629,28 +681,136 @@ function App() {
                 <span className="metric-label">Total P&L</span>
                 <span className="metric-value positive">+${portfolio.totalPL.toFixed(2)}</span>
               </div>
+              <div className="portfolio-metric">
+                <span className="metric-label">Available Balance</span>
+                <span className="metric-value">${portfolio.availableBalance.toFixed(2)}</span>
+              </div>
             </div>
-            <div className="portfolio-positions">
-              <h4>Current Positions</h4>
-              {portfolio.positions.map((position, index) => (
-                <div key={index} className="position-item">
-                  <div className="position-info">
-                    <span className="position-asset">{position.asset}</span>
-                    <span className="position-quantity">{position.quantity}</span>
-                  </div>
-                  <div className="position-details">
-                    <span className="position-price">${position.currentPrice.toFixed(2)}</span>
-                    <span className={`position-pl ${position.pl >= 0 ? 'positive' : 'negative'}`}>
-                      {position.pl >= 0 ? '+' : ''}${position.pl.toFixed(2)}
-                    </span>
-                  </div>
+            
+            {/* Earnings Overview */}
+            <div className="earnings-section">
+              <h4>Earnings Overview</h4>
+              <div className="earnings-grid">
+                <div className="earning-item">
+                  <span className="earning-label">Daily</span>
+                  <span className="earning-value positive">+${portfolio.earnings.daily.toFixed(2)}</span>
                 </div>
-              ))}
+                <div className="earning-item">
+                  <span className="earning-label">Weekly</span>
+                  <span className="earning-value positive">+${portfolio.earnings.weekly.toFixed(2)}</span>
+                </div>
+                <div className="earning-item">
+                  <span className="earning-label">Monthly</span>
+                  <span className="earning-value positive">+${portfolio.earnings.monthly.toFixed(2)}</span>
+                </div>
+                <div className="earning-item">
+                  <span className="earning-label">Yearly</span>
+                  <span className="earning-value positive">+${portfolio.earnings.yearly.toFixed(2)}</span>
+                </div>
+              </div>
             </div>
+
+            {/* Account Summary */}
+            <div className="account-summary">
+              <h4>Account Summary</h4>
+              <div className="account-metrics">
+                <div className="account-metric">
+                  <span className="metric-label">Total Deposits</span>
+                  <span className="metric-value">${portfolio.totalDeposits.toFixed(2)}</span>
+                </div>
+                <div className="account-metric">
+                  <span className="metric-label">Total Withdrawals</span>
+                  <span className="metric-value">${portfolio.totalWithdrawals.toFixed(2)}</span>
+                </div>
+                <div className="account-metric">
+                  <span className="metric-label">Net Investment</span>
+                  <span className="metric-value">${(portfolio.totalDeposits - portfolio.totalWithdrawals).toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+
             <div className="portfolio-actions">
               <button className="action-btn" onClick={depositFunds}>Deposit</button>
               <button className="action-btn" onClick={withdrawFunds}>Withdraw</button>
               <button className="action-btn">History</button>
+            </div>
+          </div>
+
+          {/* Token Holdings */}
+          <div className="dashboard-card">
+            <h3>Token Holdings</h3>
+            <div className="holdings-overview">
+              <div className="holdings-summary">
+                <span className="summary-label">Total Holdings</span>
+                <span className="summary-value">{portfolio.positions.length} Assets</span>
+              </div>
+            </div>
+            <div className="holdings-list">
+              {portfolio.positions.map((position, index) => (
+                <div key={index} className="holding-item">
+                  <div className="holding-info">
+                    <div className="holding-header">
+                      <span className="holding-asset">{position.asset}</span>
+                      <span className="holding-allocation">{position.allocation}%</span>
+                    </div>
+                    <div className="holding-details">
+                      <span className="holding-quantity">{position.quantity} {position.asset}</span>
+                      <span className="holding-value">${(position.quantity * position.currentPrice).toFixed(2)}</span>
+                    </div>
+                  </div>
+                  <div className="holding-metrics">
+                    <div className="price-info">
+                      <span className="avg-price">Avg: ${position.avgPrice.toFixed(2)}</span>
+                      <span className="current-price">${position.currentPrice.toFixed(2)}</span>
+                    </div>
+                    <div className="pl-info">
+                      <span className={`holding-pl ${position.pl >= 0 ? 'positive' : 'negative'}`}>
+                        {position.pl >= 0 ? '+' : ''}${position.pl.toFixed(2)}
+                      </span>
+                      <span className="pl-percentage">
+                        {position.pl >= 0 ? '+' : ''}{((position.pl / (position.quantity * position.avgPrice)) * 100).toFixed(2)}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Transaction History */}
+          <div className="dashboard-card">
+            <h3>Transaction History</h3>
+            <div className="transaction-list">
+              {portfolio.transactionHistory.map((transaction, index) => (
+                <div key={index} className="transaction-item">
+                  <div className="transaction-icon">
+                    {transaction.type === 'deposit' && <span className="icon">📥</span>}
+                    {transaction.type === 'withdrawal' && <span className="icon">📤</span>}
+                    {transaction.type === 'trade' && <span className="icon">💱</span>}
+                  </div>
+                  <div className="transaction-info">
+                    <div className="transaction-header">
+                      <span className="transaction-type">
+                        {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
+                        {transaction.asset && ` - ${transaction.asset}`}
+                      </span>
+                      <span className="transaction-date">{transaction.date}</span>
+                    </div>
+                    <div className="transaction-details">
+                      <span className={`transaction-amount ${transaction.type === 'withdrawal' ? 'negative' : 'positive'}`}>
+                        {transaction.type === 'withdrawal' ? '-' : '+'}${transaction.amount.toFixed(2)}
+                      </span>
+                      <span className={`transaction-status ${transaction.status}`}>
+                        {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="transaction-actions">
+              <button className="action-btn">View All</button>
+              <button className="action-btn">Export</button>
             </div>
           </div>
         </div>
