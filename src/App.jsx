@@ -49,22 +49,33 @@ function App() {
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
 
-  const LineArtLogo = () => (
-    <svg viewBox="10 10 80 90" className="line-art-logo">
-      <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
-        {/* Head */}
-        <path d="M 70 50 A 25 25, 0, 1, 0, 30,70 L 30,85 L 35,100 L 45,90 L 40,80" />
-        
-        {/* Orbits */}
-        <ellipse cx="50" cy="50" rx="38" ry="12" transform="rotate(15 50 50)"/>
-        <ellipse cx="50" cy="50" rx="38" ry="12" transform="rotate(-15 50 50)"/>
-  
-        {/* Orbit points */}
-        <circle fill="currentColor" cx="15" cy="47" r="5"/>
-        <path d="M 15 47 l -4 4" />
-        <circle fill="currentColor" cx="85" cy="53" r="5"/>
-        <path d="M 85 53 l 4 -4" />
-      </g>
+  const ModernLogo = () => (
+    <svg viewBox="0 0 100 100" className="modern-logo" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="trimind-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" className="gradient-start" />
+                <stop offset="100%" className="gradient-end" />
+            </linearGradient>
+        </defs>
+        <path d="M50 5 L95 85 L5 85 Z" className="logo-triangle-bg" />
+        <path d="M30 65 C 20 50, 40 35, 55 40 C 75 45, 85 60, 75 70 C 65 80, 45 80, 30 65 Z" className="logo-whale" />
+        <path d="M30 65 Q 20 75, 18 80 L 32 70 Z" className="logo-whale" />
+        <circle cx="70" cy="50" r="2.5" className="logo-whale-eye"/>
+        <g className="logo-neural-network">
+            <g className="logo-neural-lines">
+              <line x1="55" y1="40" x2="45" y2="30"/>
+              <line x1="55" y1="40" x2="65" y2="30"/>
+              <line x1="45" y1="30" x2="35" y2="20"/>
+              <line x1="65" y1="30" x2="75" y2="20"/>
+            </g>
+            <g className="logo-neural-nodes">
+              <circle cx="55" cy="40" r="1.5" />
+              <circle cx="45" cy="30" r="1.5" />
+              <circle cx="65" cy="30" r="1.5" />
+              <circle cx="35" cy="20" r="1.5" />
+              <circle cx="75" cy="20" r="1.5" />
+            </g>
+        </g>
     </svg>
   );
 
@@ -255,7 +266,7 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <div className="nav-logo">
-            <LineArtLogo />
+            <ModernLogo />
             <span className="logo-text">TriMind</span>
           </div>
           <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
@@ -407,7 +418,7 @@ function App() {
           <div className="footer-content">
             <div className="footer-section">
               <div className="footer-logo">
-                <LineArtLogo />
+                <ModernLogo />
                 <span className="logo-text">TriMind</span>
               </div>
               <p>AI-powered copycat trading that delivers results.</p>
@@ -443,7 +454,7 @@ function App() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <LineArtLogo />
+          <ModernLogo />
           <h2>Welcome Back to TriMind</h2>
           <p>Sign in to access your trading dashboard</p>
         </div>
@@ -482,7 +493,7 @@ function App() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <LineArtLogo />
+          <ModernLogo />
           <h2>Join TriMind</h2>
           <p>Create your account and start trading with AI</p>
         </div>
@@ -514,7 +525,7 @@ function App() {
       <nav className="dashboard-nav">
         <div className="nav-container">
           <div className="nav-logo">
-            <LineArtLogo />
+            <ModernLogo />
             <span className="logo-text">TriMind</span>
           </div>
           <div className="nav-menu">

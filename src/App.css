@@ -1596,30 +1596,53 @@ body {
 .hero .orbit-symbol.charts { right: -12px; }
 .hero .orbit-symbol.dollar { bottom: -12px; }
 
-/* Line Art Logo */
-.line-art-logo {
+/* Modern Logo */
+.modern-logo {
   width: 40px;
   height: 40px;
 }
 
-.nav-logo .line-art-logo,
-.footer-logo .line-art-logo {
-  color: #667eea;
+.modern-logo .logo-triangle-bg {
+  fill: #0A192F; /* deep navy blue */
+  stroke: #CCD6F6; /* soft white */
+  stroke-width: 1;
+  stroke-opacity: 0.5;
 }
 
-.dashboard-nav .nav-logo .line-art-logo {
-  color: #ffffff;
+.modern-logo .logo-whale {
+  fill: url(#trimind-gradient);
 }
 
-.auth-header .line-art-logo {
+.modern-logo .logo-whale-eye {
+  fill: #CCD6F6; /* soft white */
+}
+
+.modern-logo .logo-neural-lines {
+  stroke: #64FFDA; /* cyan teal */
+  stroke-width: 0.75;
+  stroke-opacity: 0.8;
+}
+
+.modern-logo .logo-neural-nodes {
+  fill: #CCD6F6; /* soft white */
+  fill-opacity: 0.8;
+}
+
+.modern-logo .gradient-start {
+  stop-color: #64FFDA; /* cyan teal */
+}
+.modern-logo .gradient-end {
+  stop-color: #0F5257; /* a darker teal */
+}
+
+.auth-header .modern-logo {
   width: 50px;
   height: 50px;
-  color: #667eea;
   margin-bottom: 0.5rem;
 }
 
 /* Cleanup old logo styles */
-.brain-logo, .ai-mind-logo {
+.line-art-logo, .brain-logo, .ai-mind-logo {
   display: none;
 }
 
