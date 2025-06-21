@@ -1596,6 +1596,33 @@ body {
 .hero .orbit-symbol.charts { right: -12px; }
 .hero .orbit-symbol.dollar { bottom: -12px; }
 
+/* Line Art Logo */
+.line-art-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.nav-logo .line-art-logo,
+.footer-logo .line-art-logo {
+  color: #667eea;
+}
+
+.dashboard-nav .nav-logo .line-art-logo {
+  color: #ffffff;
+}
+
+.auth-header .line-art-logo {
+  width: 50px;
+  height: 50px;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+}
+
+/* Cleanup old logo styles */
+.brain-logo, .ai-mind-logo {
+  display: none;
+}
+
 /* Enhanced Dashboard Styles */
 .earnings-section {
   margin: 1.5rem 0;

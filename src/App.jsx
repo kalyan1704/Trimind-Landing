@@ -49,6 +49,25 @@ function App() {
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
 
+  const LineArtLogo = () => (
+    <svg viewBox="10 10 80 90" className="line-art-logo">
+      <g fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
+        {/* Head */}
+        <path d="M 70 50 A 25 25, 0, 1, 0, 30,70 L 30,85 L 35,100 L 45,90 L 40,80" />
+        
+        {/* Orbits */}
+        <ellipse cx="50" cy="50" rx="38" ry="12" transform="rotate(15 50 50)"/>
+        <ellipse cx="50" cy="50" rx="38" ry="12" transform="rotate(-15 50 50)"/>
+  
+        {/* Orbit points */}
+        <circle fill="currentColor" cx="15" cy="47" r="5"/>
+        <path d="M 15 47 l -4 4" />
+        <circle fill="currentColor" cx="85" cy="53" r="5"/>
+        <path d="M 85 53 l 4 -4" />
+      </g>
+    </svg>
+  );
+
   // Generate initial price history
   useEffect(() => {
     const generatePriceHistory = () => {
@@ -230,31 +249,13 @@ function App() {
     return Math.max(...priceHistory.map(p => p.price))
   }
 
-  // Static Brain Logo Component
-  const BrainLogo = () => (
-    <div className="brain-logo">
-      <div className="brain-core">
-        <div className="brain-icon">🧠</div>
-      </div>
-      <div className="orbit orbit-1">
-        <div className="orbit-symbol tokens">🪙</div>
-      </div>
-      <div className="orbit orbit-2">
-        <div className="orbit-symbol charts">📊</div>
-      </div>
-      <div className="orbit orbit-3">
-        <div className="orbit-symbol dollar">💵</div>
-      </div>
-    </div>
-  )
-
   const renderHome = () => (
     <>
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
           <div className="nav-logo">
-            <BrainLogo />
+            <LineArtLogo />
             <span className="logo-text">TriMind</span>
           </div>
           <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
@@ -406,7 +407,7 @@ function App() {
           <div className="footer-content">
             <div className="footer-section">
               <div className="footer-logo">
-                <BrainLogo />
+                <LineArtLogo />
                 <span className="logo-text">TriMind</span>
               </div>
               <p>AI-powered copycat trading that delivers results.</p>
@@ -442,7 +443,7 @@ function App() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <BrainLogo />
+          <LineArtLogo />
           <h2>Welcome Back to TriMind</h2>
           <p>Sign in to access your trading dashboard</p>
         </div>
@@ -481,7 +482,7 @@ function App() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <BrainLogo />
+          <LineArtLogo />
           <h2>Join TriMind</h2>
           <p>Create your account and start trading with AI</p>
         </div>
@@ -513,7 +514,7 @@ function App() {
       <nav className="dashboard-nav">
         <div className="nav-container">
           <div className="nav-logo">
-            <BrainLogo />
+            <LineArtLogo />
             <span className="logo-text">TriMind</span>
           </div>
           <div className="nav-menu">
