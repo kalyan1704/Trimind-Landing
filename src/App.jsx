@@ -666,21 +666,45 @@ function App() {
       </div>
       <div className="demo-content">
         <div className="demo-video">
-          <div className="video-placeholder">
-            <span className="play-icon">▶️</span>
-            <p>Interactive Demo Video</p>
+          <video 
+            controls 
+            width="100%" 
+            height="auto"
+            poster="/trimind_demo_poster.jpg"
+            style={{ borderRadius: '12px', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}
+          >
+            <source src="/trimind_demo.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="video-info">
+            <h3>TriMind Platform Demo</h3>
+            <p>Watch how our AI-powered platform analyzes markets, generates signals, and helps you make profitable trading decisions.</p>
+            <div className="video-stats">
+              <span>Duration: 21 seconds</span>
+              <span>Quality: HD</span>
+              <span>Format: MP4</span>
+            </div>
           </div>
         </div>
         <div className="demo-features">
-          <h3>See TriMind in Action</h3>
+          <h3>What You'll See in This Demo</h3>
           <ul>
-            <li>Real-time market analysis</li>
-            <li>AI-powered trading signals</li>
-            <li>Whale wallet tracking</li>
-            <li>Portfolio management</li>
-            <li>Risk assessment tools</li>
+            <li>🎯 <strong>AI Mind Logo Animation</strong> - Our custom logo with revolving trading elements</li>
+            <li>📊 <strong>Live Dashboard Walkthrough</strong> - Real-time market data and AI insights</li>
+            <li>🤖 <strong>Four AI Agents</strong> - Sentiment, Technical, Fundamental, and Whale tracking</li>
+            <li>⚡ <strong>Signal Generation</strong> - How AI creates trading recommendations</li>
+            <li>📈 <strong>Portfolio Management</strong> - Track performance and manage positions</li>
+            <li>🔔 <strong>Smart Notifications</strong> - Never miss trading opportunities</li>
           </ul>
-          <button onClick={() => setCurrentView('signup')} className="demo-cta">Start Free Trial</button>
+          <div className="demo-cta-section">
+            <h4>Ready to Experience TriMind?</h4>
+            <p>Join thousands of traders who trust our AI for profitable decisions.</p>
+            <div className="demo-buttons">
+              <button onClick={() => setCurrentView('signup')} className="demo-cta primary">Start Free Trial</button>
+              <button onClick={() => setCurrentView('home')} className="demo-cta secondary">Learn More</button>
+            </div>
+            <p className="demo-note">No credit card required • 14-day free trial • Cancel anytime</p>
+          </div>
         </div>
       </div>
     </div>
